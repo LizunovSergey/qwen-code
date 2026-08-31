@@ -1121,6 +1121,8 @@ export interface DaemonSession {
   modelApplied?: boolean;
   /** Present when the session was created with worktree isolation. */
   worktree?: DaemonWorktreeInfo;
+  /** Durable worktree metadata/ownership attestation from the daemon. */
+  worktreeState?: 'persisted-v1';
   /** Present when the session was created with a new branch. */
   branch?: DaemonBranchInfo;
 }
