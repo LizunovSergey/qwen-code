@@ -3189,7 +3189,7 @@ describe('DaemonSessionClient clientId self-heal', () => {
           workspaceCwd: '/work/a',
           attached: true,
           clientId: 'client-2',
-          worktree: { slug: 'task', path: '/work/a-wt', branch: 'task' },
+          worktree: { slug: 'task', path: '/work/a-wt', branch: 'task-v2' },
           worktreeState: 'persisted-v1',
           state: {},
         });
@@ -3212,6 +3212,11 @@ describe('DaemonSessionClient clientId self-heal', () => {
     expect(promptCalls).toBe(2);
     expect(session.clientId).toBe('client-2');
     expect(session.worktreeState).toBe('persisted-v1');
+    expect(session.worktree).toEqual({
+      slug: 'task',
+      path: '/work/a-wt',
+      branch: 'task-v2',
+    });
   });
 
   it.each([
@@ -3254,6 +3259,12 @@ describe('DaemonSessionClient clientId self-heal', () => {
       expect(promptCalls).toBe(1);
       expect(detachCalls).toBe(1);
       expect(session.clientId).toBe('client-1');
+      expect(session.worktreeState).toBe('persisted-v1');
+      expect(session.worktree).toEqual({
+        slug: 'task',
+        path: '/work/a-wt',
+        branch: 'task',
+      });
       expect(
         calls.find((call) => call.url.endsWith('/detach'))?.headers[
           'x-qwen-client-id'
